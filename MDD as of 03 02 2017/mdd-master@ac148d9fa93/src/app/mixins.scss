@@ -1,0 +1,4 @@
+@mixin icon($positionX, $positionY) {
+  background-repeat: no-repeat;
+  background-position: $positionX $positionY;
+}

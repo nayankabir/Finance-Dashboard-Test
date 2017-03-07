@@ -1,0 +1,116 @@
+<div class="main-filters">
+  <template ngFor let-topFilter [ngForOf]="topFilters">
+    <div [ngSwitch]="topFilter.selectUI">
+      <!--DROP DOWNS-->
+      <div class="form-group btn-group" dropdown *ngSwitchCase="'DROP_DOWN'">
+        <label class="input-label">
+          {{topFilter.name}}
+        </label>
+        <button type="button" class="btn dropdown-select" dropdownToggle>
+          <span class="default-text">{{topFilter.selectedOption.disp}}</span>
+          <span class="caret preset-caret"></span>
+        </button>
+        <ul dropdownMenu role="menu" aria-labelledby="single-button">
+          <li *ngFor="let option of topFilter.selOptions.sval"
+              (click)="onMenuSelect(topFilter, option)">{{option.disp}}
+          </li>
+        </ul>
+      </div>
+      <!--MULTI DROP DOWNS CURRENTLY HARD CODED-->
+      <div class="accordion-heading-inner" *ngSwitchCase="'MULTI_DROP_DOWN'">
+        {{topFilter.name}}
+      </div>
+      <div class="form-group from-to-select" *ngSwitchCase="'MULTI_DROP_DOWN'">
+        <div class="btn-group" dropdown>
+          <button type="button" class="btn dropdown-select" dropdownToggle>
+            <span class="default-text">{{topFilter.selectedOption.disp}}</span>
+            <span class="caret preset-caret"></span>
+          </button>
+          <ul dropdownMenu role="menu" aria-labelledby="single-button">
+            <li *ngFor="let option of topFilter.selOptions.sval"
+                (click)="onMenuSelect(topFilter, option)">{{option.disp}}
+            </li>
+          </ul>
+        </div>
+        <div class="separator">{{topFilter.vsFilter.name}}</div>
+        <div class="btn-group" dropdown>
+          <button type="button" class="btn dropdown-select" dropdownToggle>
+            <span class="default-text">{{topFilter.vsFilter.selectedOption.disp}}</span>
+            <span class="caret preset-caret"></span>
+          </button>
+          <ul dropdownMenu role="menu" aria-labelledby="single-button">
+            <li *ngFor="let option of topFilter.vsFilter.selOptions.sval"
+                (click)="onMenuSelect(topFilter.vsFilter, option)">{{option.disp}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </template>
+</div>
+<accordion>
+  <div class="expand-all">
+    <accordion-group #preset [isOpen]="true">
+      <div class="filter-heading clearfix" accordion-heading>
+        <h4 class="pull-left" *ngIf="!preset.isOpen">EXPAND FILTERS</h4>
+        <h4 class="pull-left" *ngIf="preset.isOpen">COLLAPSE FILTERS</h4>
+        <div class="pull-right icon-expand" [ngClass]="{expanded: preset.isOpen}"
+             [ngStyle]="{'background-image': 'url(' + filterSpritePath + ')'}"></div>
+      </div>
+    </accordion-group>
+  </div>
+  <accordion-group *ngFor="let filterGroup of filterData" #group [isOpen]="(status.open || preset.isOpen)">
+    <div accordion-heading>
+      <span class="group-name">{{filterGroup.name}}</span>
+      <span *ngIf="filterGroup.selected" class="filters-selected"></span>
+      <div class="pull-right icon-expand" [ngClass]="{expanded: group.isOpen}"
+           [ngStyle]="{'background-image': 'url(' + filterSpritePath + ')'}"></div>
+    </div>
+
+    <div [ngSwitch]="filterGroup.selectUI">
+      <!--CHECK BOXES-->
+      <div class="form-group" *ngSwitchCase="'CHECK_BOX'">
+        <template ngFor let-checkOption [ngForOf]="filterGroup.selOptions.sval">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="checkOption.selected"
+                   [disabled]="isBudgetSelected(filterGroup.id)"/>
+            <span class="checkbox-styled"
+                  [ngStyle]="{'background-image': 'url(' + filterSpritePath + ')'}"></span>
+            {{checkOption.disp}}
+          </label>
+        </template>
+      </div>
+      <!--DROP DOWNS-->
+      <div class="form-group btn-group" dropdown *ngSwitchCase="'DROP_DOWN'">
+        <button type="button" class="btn dropdown-select" dropdownToggle>
+          <span #selectedOption class="default-text">{{filterGroup.selectedOption.disp}}</span>
+          <span class="caret preset-caret"></span>
+        </button>
+        <ul dropdownMenu role="menu" aria-labelledby="single-button">
+          <li *ngFor="let option of filterGroup.selOptions.sval"
+              (click)="onMenuSelect(filterGroup, option)">{{option.disp}}
+          </li>
+        </ul>
+      </div>
+
+      <!--RADIO BUTTONS-->
+      <div class="form-group" *ngSwitchCase="'RADIO'">
+        <template ngFor let-checkOption [ngForOf]="filterGroup.selOptions.sval">
+          <label class="radio-label">
+            <input type="radio" name="timeRadioGroup" (click)="filterGroup.model.use = checkOption.use"
+                     [checked]="checkOption.use === filterGroup.model.use"/>
+            <span class="radio-styled"
+                  [ngStyle]="{'background-image': 'url(' + filterSpritePath + ')'}"></span>
+            {{checkOption.disp}}
+          </label>
+        </template>
+      </div>
+
+    </div>
+  </accordion-group>
+</accordion>
+<div class="filter-footer">
+  <button class="filter-buttons apply-filter" type="button" (click)="applyFilter()">APPLY FILTERS</button>
+  <button class="filter-buttons" type="button" (click)="clearFilters()">RESET FILTERS</button>
+</div>

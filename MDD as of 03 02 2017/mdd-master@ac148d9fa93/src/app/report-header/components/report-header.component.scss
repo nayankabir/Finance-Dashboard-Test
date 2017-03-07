@@ -1,0 +1,110 @@
+@import "../../variables";
+@import "../../mixins";
+
+$header-height: 65px;
+$icon-width: 32px;
+$icon-height: 32px;
+$progress-height: 6px;
+$header-background: #454545;
+$text-color: #ffffff;
+$progress-background: rgba(0, 0, 0, .15);
+
+.report-header {
+  height: $header-height;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  background-color: $header-background;
+  z-index: 9999;
+  display: flex;
+
+  .filter-toggle {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    height: $icon-height;
+    width: $icon-width;
+    outline: none;
+    @include icon(-48px, 2px);
+    margin-top: 15px;
+    margin-left: 20px;
+  }
+  .flex-child {
+    flex: 1 1 100%;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    .flex-child {
+      flex: 1 1 auto;
+    }
+  }
+
+  .logo-wrapper {
+    display: inline-block;
+    color: $text-color;
+    .logo {
+      height: 42px;
+      width: 46px;
+      @include icon(0, 0);
+      float: left;
+      position: relative;
+      top: 9px;
+      margin-right: 10px;
+      @media (max-width: $mobile-breakpoint) {
+        margin-right: 0;
+      }
+    }
+    .logo-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 700;
+      position: relative;
+      top: 21px;
+      letter-spacing: 0.3px;
+    }
+  }
+
+  .icon-user {
+    float: left;
+    @include icon(-100px, 0);
+    width: 20px;
+    height: 20px;
+  }
+
+  .user {
+    float: right;
+    margin-top: 22px;
+    margin-right: 20px;
+    height: 16px;
+    font-size: 14px;
+    text-align: right;
+    color: $text-color;
+
+    span {
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+      @media (max-width: $mobile-breakpoint) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .progress {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $progress-height;
+    background-color: $progress-background;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: $mobile-breakpoint) {
+  .user-icon {
+    margin-right: 0 !important;
+  }
+  .report-header {
+    position: relative;
+  }
+}

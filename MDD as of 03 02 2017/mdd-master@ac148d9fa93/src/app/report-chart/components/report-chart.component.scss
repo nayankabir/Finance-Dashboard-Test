@@ -1,0 +1,26 @@
+@import "../../variables";
+
+:host {
+  .highcharts-container {
+    width: 100% !important;
+
+    .highcharts-title, .highcharts-tooltip + text {
+      display: none;
+    }
+
+    .highcharts-grid {
+      path {
+        stroke: #eaf3fb;
+        stroke-width: 2;
+      }
+    }
+
+    .highcharts-button {
+      display: none;
+    }
+  }
+
+  .highcharts-data-labels g text {
+    transform: translateY(-20px);
+  }
+}

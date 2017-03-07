@@ -1,0 +1,30 @@
+.chart-wrapper {
+
+  .widget {
+
+    padding-left: 0;
+    padding-right: 0;
+    border: 1px solid #d8d8d8;
+    border-top-width: 0;
+
+    .chart-title {
+      padding-left: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 60px;
+      color: #333333;
+      border-bottom: 2px solid #d8d8d8;
+    }
+
+    .negative-chart {
+      height: 210px;
+      background-color: #ffffff;
+    }
+
+    .waterfall-chart {
+      height: 440px;
+      background-color: #ffffff;
+    }
+
+  }
+}

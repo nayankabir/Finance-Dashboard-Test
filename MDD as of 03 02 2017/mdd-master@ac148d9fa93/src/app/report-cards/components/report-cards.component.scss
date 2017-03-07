@@ -1,0 +1,233 @@
+@import "../../variables";
+@import "../../mixins";
+
+$color-green: #5ca550;
+$color-red: #ed1b2d;
+
+@mixin metricArrow($border-width) {
+  margin-top: 18px;
+  margin-left: 8px;
+  width: 0;
+  height: 0;
+  border-left: $border-width solid transparent;
+  border-right: $border-width solid transparent;
+}
+
+@mixin setMaxWidthForCards($divisor) {
+  .card-outer {
+    flex-basis: 100% / $divisor;
+    max-width: 100% / $divisor;
+  }
+  &.has-offset .card-outer {
+    flex-basis: 100% / ($divisor - 1); // offset width usually takes a size of one card
+    max-width: 100% / ($divisor - 1);
+  }
+}
+@mixin cardRowHover() {
+  color: #ffffff;
+  .up-sm, .down-sm {
+    color: #ffffff;
+  }
+}
+
+@mixin hasOverflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cards-wrapper {
+  margin-left: -($grid-gutter/2);
+  margin-right: -($grid-gutter/2);
+  display: flex;
+  flex-wrap: wrap;
+  .card-outer {
+    flex: 1 1 100%;
+    padding-left: $grid-gutter/2;
+    padding-right: $grid-gutter/2;
+    max-width: 100%;
+  }
+  // setting width for cards in different breakpoints
+  @media (min-width: 1900px) {
+    @include setMaxWidthForCards(6);
+  }
+  @media (max-width: 1899px) {
+    @include setMaxWidthForCards(5);
+  }
+  @media (max-width: 1640px) {
+    @include setMaxWidthForCards(4);
+  }
+  @media (max-width: 1280px) {
+    @include setMaxWidthForCards(3);
+  }
+  @media (max-width: 980px) {
+    @include setMaxWidthForCards(2);
+  }
+  @media (max-width: 767px) {
+    @include setMaxWidthForCards(1);
+  }
+
+  .card {
+    padding: 0;
+    min-width: 295px;
+    width: 100%;
+    height: 280px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+
+    @media (max-width: 350px) {
+      min-width: 280px;
+    }
+
+    .flex-parent {
+      display: flex;
+    }
+
+    .metric-name {
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      text-transform: uppercase;
+    }
+    .metric-info {
+      height: 170px;
+      border-bottom: 2px solid #d8d8d8;
+      padding: 20px;
+      .up, .down {
+        margin-right: 15px;
+      }
+      .up {
+        @include metricArrow(19px);
+        border-bottom: 28px solid #5ca550;
+      }
+
+      .down {
+        @include metricArrow(19px);
+        border-top: 28px solid $color-red;
+      }
+
+      .metric-description {
+        margin-top: 15px;
+        font-size: 30px;
+        line-height: 1.13;
+        color: #333;
+        &.has-overflow {
+          @include hasOverflow();
+        }
+      }
+      .metric-description-main {
+        font-weight: 700;
+      }
+      .metric-description-secondary {
+        font-weight: 300;
+        font-size: 27px;
+      }
+      .separator {
+        font-weight: 100;
+        color: #b7b7b7;
+      }
+    }
+
+    .details-container {
+
+      height: 190px;
+      text-align: center;
+
+      .period-info {
+        margin: 0 auto;
+        width: 100%;
+        tr {
+          border-bottom: 1px solid #d8d8d8;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+        tr td {
+          padding: 18px 5px 17px;
+          max-width: 85px;
+          &.has-overflow {
+            @include hasOverflow();
+          }
+          &.has-indicator {
+            min-width: 85px;
+          }
+          a {
+            cursor: pointer;
+          }
+          .glyphicon {
+            margin-right: 5px;
+            display: inline-block;
+          }
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            padding-right: 20px;
+          }
+
+        }
+        .icon-right {
+          display: inline-block;
+          width: 19px;
+          height: 19px;
+          @include icon(0, -50px);
+        }
+        .highlighted {
+          font-weight: 700;
+          .icon-right {
+            @include icon(0, 0);
+          }
+        }
+        .hoveredUp .icon-right, .hoveredDown .icon-right {
+          @include icon(-50px, -50px);
+        }
+        .hoveredUp.highlighted .icon-right, .hoveredDown.highlighted .icon-right {
+          @include icon(-50px, 0);
+        }
+        .up-sm {
+          color: #5ca550;
+        }
+        .down-sm {
+          color:  $color-red;
+        }
+        .hoveredUp {
+          background-color: #5ca550;
+          @include cardRowHover();
+        }
+        .hoveredDown {
+          background-color: $color-red;
+          @include cardRowHover();
+        }
+      }
+    }
+
+    .metric-details {
+      height: 100px;
+      border-bottom: 0;
+
+      .metric-name {
+        color: #ffffff;
+      }
+    }
+
+    .metric-details-up {
+      background-color: #5ca550;
+      .up {
+        @include metricArrow(19px);
+        border-bottom: 28px solid #ffffff;
+      }
+    }
+
+    .metric-details-down {
+      background-color: $color-red;
+      .down {
+        @include metricArrow(19px);
+        border-top: 28px solid #ffffff;
+      }
+    }
+  }
+}

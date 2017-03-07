@@ -1,0 +1,329 @@
+@import "../../variables";
+@import "../../mixins";
+
+$filter-background: #e9e9e9;
+$filter-color: #333333;
+$icon-width: 22px;
+$icon-height: 22px;
+
+@mixin preset-dropdown() {
+  background-color: #ffffff;
+  border: solid 1px #7d7d7d;
+  font-size: 13px;
+  color: #525358;
+}
+
+:host {
+  padding-left: 0;
+  padding-right: 0;
+  accordion-group {
+
+    .panel {
+      border-bottom: none;
+      border-left: 0;
+      border-right: 0;
+      background: transparent;
+      box-shadow: none;
+
+      .panel-heading {
+        padding: 16px 20px 17px 20px;
+        background-color: $filter-background;
+        color: $filter-color;
+
+
+        .filters-selected {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: #ed1b2d;
+          margin-left: 3px;
+          margin-top: 2px;
+          display: inline-block;
+          position: relative;
+          top: 1px;
+        }
+        .icon-expand {
+          width: $icon-width;
+          height: $icon-height;
+          @include icon(0, 0);
+          position: relative;
+          top: -3px;
+          &.expanded {
+            @include icon(-50px, 0);
+          }
+        }
+        .filter-heading {
+          .icon-expand {
+            margin-top: 9px;
+          }
+        }
+
+        .panel-title {
+          color: $filter-color;
+          font-size: 13px;
+          font-weight: bold;
+          letter-spacing: 0.3px;
+
+          a:focus, a:hover {
+            text-decoration: none;
+            outline: none;
+          }
+        }
+      }
+
+      .panel-body {
+        padding: 0 20px;
+        background-color: $filter-background;
+        border-top-color: transparent !important;
+      }
+    }
+  }
+
+  .filter-footer {
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: $filter-background;
+    width: $filter-width;
+    display: flex;
+    border-top: 1px solid #ddd;
+    .filter-buttons {
+      display: inline-block;
+      border: 1px solid $filter-color;
+      border-radius: 5px;
+      padding: 15px 10px 14px;
+      font-weight: bold;
+      font-size: 13px;
+      color: $filter-color;
+      border: none;
+      background-color: transparent;
+      flex: 1 1 50%;
+      line-height: 1;
+
+      &:focus, &:active, &:hover {
+        outline: none;
+      }
+      &:hover, &:focus {
+        background: #454545;
+        border-color: #454545;
+        color: #fff;
+      }
+      &:active {
+        background: #333333;
+        border-color: #333333;
+        color: #fff;
+      }
+    }
+
+    .apply-filter {
+      width: 90%;
+      background-color: $filter-background;
+      border: 1px solid $filter-color;
+      border-radius: 4px;
+      margin-right: 20px;
+      // TODO: move these to shared btn styles
+      &:hover, &:focus {
+        background-color: $color-red;
+        border-color: $color-red;
+        color: #fff;
+      }
+      &:active {
+        background-color: $color-darkred;
+        border-color: $color-darkred;
+        color: #fff;
+      }
+    }
+    @media (max-width: $mobile-breakpoint) {
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  .accordion-heading-inner, .input-label {
+    color: $filter-color;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 9px;
+  }
+
+  .main-filters {
+    padding: 20px 20px 0;
+  }
+  .panel-group {
+    display: block;
+    padding-bottom: 130px;
+  }
+
+  .expand-all {
+    .panel-collapse {
+      display: none !important;
+    }
+  }
+
+  h4 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin: 7px 0;
+  }
+  .dropdown-select {
+    height: 42px;
+    border-radius: 4px !important;
+    position: relative;
+    @include preset-dropdown();
+
+    .default-text {
+      display: inline-block;
+      height: 16px;
+      font-size: 13px;
+    }
+    + .dropdown-menu {
+      width: 100%;
+      max-width: 330px;
+      min-width: 112px;
+      max-height: 330px;
+      overflow: auto;
+      padding: 0;
+      border-color: #7d7d7d;
+      li {
+        padding: 11px 15px;
+        &:hover, &:focus {
+          background-color: #ed1b2d;
+          color: #fff;
+        }
+      }
+    }
+
+    .preset-caret {
+      width: 10px;
+      height: 5px;
+      margin-top: 7px;
+      border-width: 5px;
+      position: absolute;
+      right: 12px;
+    }
+  }
+  .open .dropdown-select {
+    background-color: #f4f4f4;
+    box-shadow: inset 0px 2px 2px 0 rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 20px;
+    &.form-group-separate {
+      margin-bottom: 25px;
+    }
+  }
+  .btn-group {
+    display: block;
+    .btn {
+      display: block;
+      float: none;
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .from-to-select {
+    display: flex;
+    .btn-group {
+      flex: 1 1 100%;
+      .btn {
+        width: 100%;
+        text-align: left;
+      }
+    }
+    .separator {
+      flex: 0 1 auto;
+      margin: 10px 15px 0;
+      font-size: 13px;
+      color: $filter-color;
+    }
+  }
+
+  // custom checkboxes and radio btns
+  .radio-label, .checkbox-label {
+    font-weight: 400;
+    padding-bottom: 11px;
+    margin-bottom: 0;
+    cursor: pointer;
+    display: block;
+    &:last-child {
+      padding-bottom: 0;
+    }
+    input {
+      position: absolute;
+      left: -9999px;
+    }
+    .radio-styled, .checkbox-styled {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      top: 3px;
+      margin-right: 5px;
+      display: inline-block;
+    }
+  }
+  .radio-label {
+    input[type=radio]:checked + span {
+      background-position: -250px 0;
+    }
+    .radio-styled {
+      @include icon(-200px, 0);
+    }
+    &:hover {
+      input[type=radio]:checked + span {
+        background-position: -250px -50px;
+      }
+      .radio-styled {
+        background-position: -200px -50px;
+      }
+    }
+    // disabled states
+    input[type=radio]:disabled + span {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    input[type=radio]:disabled + span,
+    &:hover input[type=radio]:disabled + span {
+      background-position: -200px 0;
+    }
+    input[type=radio]:disabled:checked + span,
+    &:hover input[type=radio]:disabled:checked + span {
+      background-position: -250px 0;
+    }
+  }
+  .checkbox-label {
+    input[type=checkbox] {
+      &:checked + .checkbox-styled {
+        background-position: -150px 0;
+      }
+    }
+    .checkbox-styled {
+      @include icon(-100px, 0);
+    }
+    &:hover {
+      input[type=checkbox]:checked + span {
+        background-position: -150px -50px;
+      }
+      .checkbox-styled {
+        background-position: -100px -50px;
+      }
+    }
+    // disabled states
+    input[type=checkbox]:disabled + span {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    input[type=checkbox]:disabled + span,
+    &:hover input[type=checkbox]:disabled + span {
+      background-position: -100px 0;
+    }
+    input[type=checkbox]:disabled:checked + span,
+    &:hover input[type=checkbox]:disabled:checked + span {
+      background-position: -150px 0;
+    }
+  }
+}
