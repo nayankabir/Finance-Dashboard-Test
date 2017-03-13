@@ -1,7 +1,0 @@
-<ol class="breadcrumb">
-  <li *ngFor="let breadCrumb of (breadcrumbs | async); let i = index; let last = last;"
-      (click)="!last && onBreadcrumbClick(breadCrumb, i)"
-      [ngClass]="{'selected': breadCrumb.active}">
-    <a>{{breadCrumb.text}}</a></li>
-</ol>
-<!--<div class="metrics-title"><span>WTD 2016 vs 2 years avg.</span></div>-->
